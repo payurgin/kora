@@ -2,7 +2,6 @@ package ru.tinkoff.kora.resilient.annotation.processor.aop;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import ru.tinkoff.kora.resilient.annotation.processor.aop.testdata.CircuitBreakerLifecycle;
 import ru.tinkoff.kora.resilient.annotation.processor.aop.testdata.CircuitBreakerTarget;
 import ru.tinkoff.kora.resilient.circuitbreaker.CallNotPermittedException;
 
@@ -18,8 +17,8 @@ class CircuitBreakerTests extends CircuitBreakerRunner {
             .toList();
 
         return values.stream()
-            .filter(a -> a instanceof CircuitBreakerLifecycle)
-            .map(a -> ((CircuitBreakerLifecycle) a).target())
+            .filter(a -> a instanceof CircuitBreakerTarget)
+            .map(a -> ((CircuitBreakerTarget) a))
             .findFirst().orElseThrow();
     }
 

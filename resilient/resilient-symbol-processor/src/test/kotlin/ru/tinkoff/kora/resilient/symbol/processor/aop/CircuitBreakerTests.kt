@@ -5,7 +5,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import ru.tinkoff.kora.resilient.circuitbreaker.CallNotPermittedException
-import ru.tinkoff.kora.resilient.symbol.processor.aop.testdata.CircuitBreakerLifecycle
 import ru.tinkoff.kora.resilient.symbol.processor.aop.testdata.CircuitBreakerTarget
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -19,8 +18,8 @@ class CircuitBreakerTests : CircuitBreakerRunner() {
             .toList()
 
         return values.asSequence()
-            .filter { a -> a is CircuitBreakerLifecycle }
-            .map { a -> (a as CircuitBreakerLifecycle).target }
+            .filter { a -> a is CircuitBreakerTarget }
+            .map { a -> a as CircuitBreakerTarget }
             .first()
     }
 

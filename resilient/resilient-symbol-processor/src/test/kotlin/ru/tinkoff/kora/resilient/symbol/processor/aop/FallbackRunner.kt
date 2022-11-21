@@ -10,12 +10,12 @@ import ru.tinkoff.kora.config.ksp.processor.ConfigSourceSymbolProcessorProvider
 import ru.tinkoff.kora.kora.app.ksp.KoraAppProcessorProvider
 import ru.tinkoff.kora.ksp.common.symbolProcess
 import ru.tinkoff.kora.resilient.symbol.processor.aop.testdata.AppWithConfig
-import ru.tinkoff.kora.resilient.symbol.processor.aop.testdata.CircuitBreakerTarget
+import ru.tinkoff.kora.resilient.symbol.processor.aop.testdata.FallbackTarget
 import java.util.function.Supplier
 import kotlin.reflect.KClass
 
 @KspExperimental
-open class CircuitBreakerRunner : Assertions() {
+open class FallbackRunner : Assertions() {
 
     companion object {
         var GRAPH: InitializedGraph? = null
@@ -27,7 +27,7 @@ open class CircuitBreakerRunner : Assertions() {
         if (GRAPH == null) {
             GRAPH = createGraphDraw(
                 AppWithConfig::class,
-                CircuitBreakerTarget::class,
+                FallbackTarget::class
             )
         }
 
@@ -49,11 +49,8 @@ open class CircuitBreakerRunner : Assertions() {
             val graphDraw = (clazz.constructors.first().newInstance() as Supplier<ApplicationGraphDraw>).get()
             val graph = graphDraw.init().block()!!
             InitializedGraph(graphDraw, graph)
-        } catch (e: Exception) {
-            if (e.cause != null) {
-                throw IllegalStateException(e.cause)
-            }
-            throw IllegalStateException(e)
+        } catch (e: Throwable) {
+            throw e
         }
     }
 }

@@ -9,14 +9,14 @@ import ru.tinkoff.kora.config.annotation.processor.processor.ConfigRootAnnotatio
 import ru.tinkoff.kora.config.annotation.processor.processor.ConfigSourceAnnotationProcessor;
 import ru.tinkoff.kora.kora.app.annotation.processor.KoraAppProcessor;
 import ru.tinkoff.kora.resilient.annotation.processor.aop.testdata.AppWithConfig;
-import ru.tinkoff.kora.resilient.annotation.processor.aop.testdata.CircuitBreakerTarget;
+import ru.tinkoff.kora.resilient.annotation.processor.aop.testdata.FallbackTarget;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public abstract class CircuitBreakerRunner extends Assertions {
+public abstract class FallbackRunner extends Assertions {
 
     private static InitializedGraph GRAPH = null;
 
@@ -24,7 +24,7 @@ public abstract class CircuitBreakerRunner extends Assertions {
 
     protected static InitializedGraph createGraphDraw() {
         if (GRAPH == null) {
-            GRAPH = createGraphDraw(AppWithConfig.class, CircuitBreakerTarget.class);
+            GRAPH = createGraphDraw(AppWithConfig.class, FallbackTarget.class);
         }
         return GRAPH;
     }
